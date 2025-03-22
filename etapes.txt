@@ -1,0 +1,197 @@
+Projet minimal, tower defense:
+- grille de jeu
+- ennemis (d'un seul type) apparaissent de manière prédéterminée à un coin de l'écran et cherchent à atteindre le coin opposé, selon un chemin prédéterminé.
+- ennemis ont une vie, une vitesse
+- tours peuvent être construites n'importe où hors du chemin, selon un budget
+- tours ont un modèle unique et tirent sur les ennemis
+- interface graphique pygame simpliste (formes géométriques)
+- points de vie et game over
+
+Projet minimal, étapes:
+Etape 1: grille /OK/
+* creation de la grille de jeu, chaque case étant initialisée vide
+* creation d'une fonction pour ajouter une tour
+* creation d'une fonction pour ajouter une tuile de chemin, avec une valeur
+PYGAME: creation d'une fonction renvoyant les coordonnées dans la grille en fonction de coordonnées en x,y
+PYGAME: creation d'une fonction d'affichage
+
+Etape 2: chemins /OK/
+création des chemins, une classe avec deux méthodes:
+* une méthode qui indique les coordonnées de la prochaine tuile chemin dans le parcours du depart à l'arrivée
+PYGAME: une methode pour l'afficher 
+NB: le départ et l'arrivée des ennemis seront de simples chemins. L'arrivée n'aura pas de tuile suivante.
+* création d'une fonction d'initialisation dans la GRILLE pour créer le chemin
+
+Etape 3: sprites /OK/
+creation d'une classe abstraite sprite, avec
+* des coordonnéesXY
+* une methode abstraite d'affichage (vide)
+* une methode d'initialisation qui le stocke dans une liste de tous les sprites
+
+Etape 4: ennemis /OK/
+création des ennemis, une classe fille de sprites avec 
+* un nombre de pv
+* une vitesse
+* la tuile sur laquelle il est et la tuile vers laquelle il va (la prochaine dans le chemin)
+* une methode de comportement, ie qui déplace l'ennemi vers la prochaine tuile du chemin
+* une methode de mise à jour des tuiles, methode appelée après déplacement
+* une methode de mort
+PYGAME: une méthode d'affichage
+
+Etape 5: tours /OK/
+création des tours, une classe avec
+* une cadence de tir
+* une portée
+* des coordonnéesLC (ligne colonne)
+* une methode de selection de l'ennemi sur lequel tirer --DUR
+* une methode de tir
+PYGAME: une methode d'affichage
+
+Etape 6: projectiles /OK/
+creation des projectiles, une classe fille de sprites avec
+* une quantité de dégats
+* une methode pour faire des dégats à un ennemi
+* une methode de disparition
+PYGAME: une methode d'affichage
+
+Etape 7: Apparition des ennemis /OK/
+creation de la sequence d'apparition des ennemis, aléatoire ou prédéterminée
+* fonction faisant apparaitre un ennemi au départ
+* fonction vérifiant qu'il y a encore des ennemis à envoyer (pour verifier si on a gagné)
+
+Etape 8: points de vie et dégâts /OK/
+* variable de points de vie
+* fonction pour prendre des dégâts, appelée si un ennemi arrive au bout du chemin
+* fonction de déclenchement du game over
+
+Etape 9: budget et création des tours /OK/
+* fonction qui vérifie si on a le budget pour créer une tour
+
+Etape 10: interface graphique /OK/
+* interface graphique, appel des fonctions d'affichage de la grille, des tours, des ennemis, affichage des points de vie, de l'argent
+
+Etape 11: interactions avec le joueur /OK/
+* détecter un clic, déterminer les coordonnées dans la grille
+* si on a le budget et que c'est une case sur laquelle on peut construire une tour, construction de la tour
+
+Etape 12: boucle de jeu /OK/
+* creation de la boucle de jeu, qui se poursuit jusqu'au game over ou la victoire ou jusqu'à ce que le joueur quitte
+* appel de l'update de la grille
+* appel de l'update de tous les sprites
+* appel de l'affichage
+
+Etape 13: fusionner les scripts /OK/
+
+Améliorations:
+- possibilité de déconstruire et améliorer les tours
+- autres ennemis, autres tours avec des comportements différents
+- graphismes du fond, du chemin, des ennemis, des tours, des projectiles
+- musiques
+- score
+- sauvegarde du score/du meilleur score
+
+- différents niveaux/un niveau infini à difficulté croissante
+- chemin plus prédéterminé, mais calculé au début de la phase de jeu/à chaque fois qu'on pose une tour
+- plusieurs entrées pour les ennemis
+
+
+Améliorations:
+PRIMODIAL:
+- présentation (soutenance)
+- tests des fonctions
+- restructuration du code
+
+Etape 1: graphismes /OK/
+* fond d'écran
+* fond de carte
+* chemin
+* images pour les tours 
+* images pour les projectiles
+* images pour les ennemis
+* logos pour la vie, le score, l'argent
+
+Etape 1.5: système d'animation
+* rajouter à l'objet à animer un dictionnaire d'images indexées par le nom de l'animation et le numero de la frame
+* rajouter aussi une methode updateAnimation chargée de changer d'image (en revenant à la premiere si on est arrivé au bout)
+* enfin rajouter un chronometre qui appelle updateAnimation à intervalle régulier, en utilisant le dt. 
+
+Etape 2: sons /OK/
+* musique
+* effets sonores pour ennemis (mort et existence)
+* effets sonores pour les tours (construction, tir)
+* effets sonores pour projectiles (impact)
+PYGAME: les faire jouer c'est mieux
+
+Etape 3: amélioration de l'opponent manager /OK/
+* création d'une classe vague avec différents modes de difficultés
+* création d'une methode qui vérifie si une vague est finie
+* création d'une methode de suppression de la vague
+* création d'un programme qui gère les vagues (déclenchement, montée en difficulté, etc)
+* pathfinding plus solide pour les ennemis
+
+Etape 5: création d'autres tours /OK/
+* création d'une sur-classe abstraite 'tour' dont les fils seront les classes des différentes tours
+* création des classes des autres types de tours
+PYGAME: son, image, animation
+
+Etape 6: création d'autres ennemis /OK/
+* création d'une sur-classe abstraite "ennemi" dont les fils seront les classes des différents ennemis
+* création des classes des autres types d'ennemis
+PYGAME: son, image, animation -----
+
+Etape 7: création d'un moyen de sélection des tours à construire /OK/
+(par des coches sur le bord de l'écran semble le plus simple)
+* création d'une zone en dehors de l'écran où le joueur peut sélectionner ses actions
+* création d'un "souris manager" qui détecte un clic dans cette zone et enregistre une action qui y aurait été sélectionnée
+* encodage de l'usage effectif de ces actions (construire la bonne tour, etc)
+PYGAME: logos des cases sur lesquelles appuyer
+
+Etape 8: game over propre /OK/
+* création d'états de jeu, tels que "jeu en cours" et "game over"
+* ajout dans TD_game de conditions sur l'état pour les appels aux updates(updateGrid et updateSprites appeles que si on est dans l'état "jeu en cours")
+* si on est dans l'état "gameOver", affichage d'une fenetre avec quelques statistiques (score, etc)
+* ajout à cette fenetre de l'option de recommencer:
+    - création d'une fonction start() qui initialise une partie
+    - appel de cette fonction quand on appuie sur un bouton
+* ajout à cette fenetre de l'option de quitter: dans TD_game, mettre continuer à False si on appuie sur un bouton
+* changement d'état et affichage au gameOver
+PYGAME: ajout de tout ca à l'interface graphique, musique triste
+
+SYMPA:
+Etape1: déconstruction des tours /OK/
+* ajout d'une methode de deconstruction aux tours (remboursement partiel?)
+* appel de cette methode au bon moment (cf etape 7 de important)
+PYGAME: ajout de la possibilité à l'interface graphique, son qui va avec
+
+Etape 2: pause /OK/
+* création d'un état de jeu pause (cf etape 8 de important)
+* ajout du changement d'état par un bouton (cf etape 7 de important)
+PYGAME: logo pause
+
+Etape 3: amélioration des tours /OK/
+* designer les tours améliorées
+* implémenter les classes des tours améliorées
+* implémenter la possibilité d'améliorer une tour (cf etape 7 de important)
+GRAPHISMES/SONS: apparences, images, animations pour les nouvelles tours et leurs projectiles
+
+Etape 4: changer la vitesse du jeu /OK/
+*changer la valeur de DT en fonction du curseur
+PYGAME : ajouter un curseur au menu
+
+Etape 5: sauvegarde du meilleur score /OK/
+* créer un document .txt permettant la sauvegarde
+* lecture du meilleur score
+* mise à jour du meilleur score à chaque gameOver
+
+Etape 6: parcours qui change /OK/
+* changer chemin: différentes entrées, différentes sorties, etc
+
+SECONDAIRE:
+Etape1: pouvoirs complémentaires
+* ajout de capacités non liées aux tours qui se rechargent avec le temps, comme une chute de météorites, etc
+
+Etape2: chemin aléatoire pour meilleure rejouabilité /OK/
+* détermination et création d'un chemin aléatoire en début de partie pour éviter la répétitivité dans les parties
+
+Etape3: crédits
+* parce que pourquoi pas
